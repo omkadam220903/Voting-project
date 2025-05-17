@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body class="bg-light d-flex align-items-center justify-content-center vh-100">
+  <div class="card shadow-lg p-4" style="min-width: 350px; max-width: 450px; width: 100%;">
+    <h2 class="mb-4 text-center">Login</h2>
+
+    <form id="loginForm" novalidate>
+      <!-- Email -->
+      <div class="mb-3">
+        <label for="email" class="form-label">Email address</label>
+        <input type="email" class="form-control" id="email" required  />
+      </div>
+
+      <!-- Password -->
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" required  />
+      </div>
+
+      
+
+      <!-- Login Button -->
+      <button type="submit" class="btn btn-primary btn-lg w-100 mb-3">Login</button>
+
+      <!-- Error Message -->
+      <div id="error" class="text-danger text-center mb-3"></div>
+
+      <!-- Register Prompt -->
+      <div class="text-center">
+        <p class="mb-2">Don't have an account?</p>
+        <a href="./pages/Regestration.html" class="btn btn-success btn-sm px-4">Register</a>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      verify();
+    });
+
+    function verify() {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const errorDiv = document.getElementById("error");
+
+      if (!email || !password) {
+        errorDiv.textContent = "Please fill in all fields.";
+        return;
+      }
+
+      fetch("http://localhost:8080/api/users")
+        .then((res) => res.json())
+        .then((users) => {
+          const user = users.find(
+            (u) => u.email === email && u.password === password 
+          );
+
+          if (user) {
+            sessionStorage.setItem("userId", user.id);
+            sessionStorage.setItem("userName", user.name);
+            sessionStorage.setItem("userType", user.userType);
+            window.location.href = user.userType === "Admin" ? "Admin.html" : "voter.html";
+          } else {
+            errorDiv.textContent = "Invalid credentials or user type mismatch.";
+          }
+        })
+        .catch((err) => {
+          console.error("Error fetching users:", err);
+          errorDiv.textContent = "Server error. Please try again later.";
+        });
+    }
+    function getUserId(){
+      return sessionStorage.getItem("userId");
+    }
+  </script>
+</body>
+
+</html>

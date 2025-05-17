@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Registration Form</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <style>
+    .container {
+      max-width: 900px;
+      margin-top: 50px;
+    }
+
+    h2, h4 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .form-label {
+      font-weight: bold;
+    }
+
+    .invalid-feedback {
+      font-size: 0.875rem;
+    }
+
+    .btn-primary {
+      width: 100%;
+    }
+
+    .text-center a {
+      text-decoration: none;
+      color: #007bff;
+    }
+
+    .text-center a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body class="bg-light">
+
+  <div class="container">
+    <h2>User Registration</h2>
+
+    <form id="userForm" class="mb-4 border p-4 rounded bg-white shadow-sm">
+      <div class="mb-3">
+        <label for="name" class="form-label">Full Name</label>
+        <input type="text" class="form-control" id="name" placeholder="Enter your full name" required />
+        <div class="invalid-feedback">Name should be of length 5..</div>
+      </div>
+      <div class="mt-2 mb-3">
+        <label for="age" class="form-label">Age</label>
+        <input type="number" class="form-control" id="Age" placeholder="Enter your Age" required />
+        <div class="invalid-feedback">For registration your age should be 18</div>
+      </div>
+      <div class="mt-2 mb-3">
+        <label for="const" class="form-label">Constituency</label>
+        <input type="text" class="form-control" id="Constituency" placeholder="Enter your Constituency" required />
+        <div class="invalid-feedback">Enter minimum 2 characters</div>
+      </div>
+      <div class="mt-2 mb-3">
+        <label for="email" class="form-label">Email Address</label>
+        <input type="email" id="email" placeholder="Enter your email address" class="form-control" required />
+        <div class="invalid-feedback">Please enter a valid email.</div>
+      </div>
+      <div class="mt-2 mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" id="password" placeholder="Enter your password" class="form-control" required />
+        <div class="invalid-feedback">Password should be at least 8 characters long.</div>
+      </div>
+      <div class="mt-2 mb-3">
+        <label for="phone" class="form-label">Phone Number</label>
+        <input type="number" id="phone" placeholder="Enter your mobile number" class="form-control" required />
+        <div class="invalid-feedback">Number should be of size 10 and start with 7,8,9.</div>
+      </div>
+      <div class="mb-3">
+        <label for="voterId" class="form-label">Voter ID Number</label>
+        <input type="text" id="voterId" placeholder="Enter your voter ID number" class="form-control" required />
+        <div class="invalid-feedback">Enter a valid ID number.</div>
+      </div>
+      <div class="mt-2 mb-3">
+        <label for="userType" class="form-label">User Type</label>
+        <select id="userType" class="form-select" required>
+          <option value="">--Select--</option>
+          <option value="Admin">Admin</option>
+          <option value="Candidate">Candidate</option>
+          <option value="Voter">Voter</option>
+        </select>
+        <div class="invalid-feedback">Please select your User Type.</div>
+      </div>
+
+      <button type="submit" class="btn btn-primary" id="submitBtn">Submit</button><br><br>
+      <p class="text-center">Already a user?</p>
+      <div class="text-center">
+        <a href="../login.html"><h5>Login</h5></a>
+      </div>
+    </form>
+
+    <!-- Registered Users Table -->
+    <h4 class="text-center mb-3">Registered Users</h4>
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped" id="userTable">
+        <thead class="table-dark">
+          <tr>
+            <th>#</th>
+            <th>Full Name</th>
+            <th>Age</th>
+            <th>Constituency</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Voter ID</th>
+            <th>User Type</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const username = 'Om'; 
+const password = 'om12345'; 
+const basicAuth = btoa(`${username}:${password}`);
+    const apiUrl = "http://localhost:8080/api/users";
+    const form = document.getElementById("userForm");
+    const fname = document.getElementById("name");
+    const Age = document.getElementById("Age");
+    const Constituency = document.getElementById("Constituency");
+    const email = document.getElementById("email");
+    const passwordIp = document.getElementById("password");
+    const phone = document.getElementById("phone");
+    const voterId = document.getElementById("voterId");
+    const userType = document.getElementById("userType");
+    let users = [];
+
+    function validateFullName() {
+      if (fname.value.trim().length >= 5) {
+        fname.classList.add("is-valid");
+        fname.classList.remove("is-invalid");
+        return true;
+      } else {
+        fname.classList.add("is-invalid");
+        fname.classList.remove("is-valid");
+        return false;
+      }
+    }
+
+    function validateAge() {
+      if (Age.value >= 18) {
+        Age.classList.add("is-valid");
+        Age.classList.remove("is-invalid");
+        return true;
+      } else {
+        Age.classList.add("is-invalid");
+        Age.classList.remove("is-valid");
+        return false;
+      }
+    }
+
+    function validateConstituency() {
+      if (Constituency.value.trim().length >= 2) {
+        Constituency.classList.add("is-valid");
+        Constituency.classList.remove("is-invalid");
+        return true;
+      } else {
+        Constituency.classList.add("is-invalid");
+        Constituency.classList.remove("is-valid");
+        return false;
+      }
+    }
+
+    function validateVoterId() {
+      let regx = /^[a-zA-Z0-9]{6}$/;
+      if (regx.test(voterId.value)) {
+        voterId.classList.add("is-valid");
+        voterId.classList.remove("is-invalid");
+        return true;
+      } else {
+        voterId.classList.add("is-invalid");
+        voterId.classList.remove("is-valid");
+        return false;
+      }
+    }
+
+    function validatePassword() {
+      let regx = /^[a-zA-Z0-9]{8}$/;
+      if (regx.test(passwordIp.value)) {
+        passwordIp.classList.add("is-valid");
+        passwordIp.classList.remove("is-invalid");
+        return true;
+      } else {
+        passwordIp.classList.add("is-invalid");
+        passwordIp.classList.remove("is-valid");
+        return false;
+      }
+    }
+
+    function validateUserType() {
+      if (userType.value) {
+        userType.classList.add("is-valid");
+        userType.classList.remove("is-invalid");
+        return true;
+      } else {
+        userType.classList.add("is-invalid");
+        userType.classList.remove("is-valid");
+        return false;
+      }
+    }
+
+    function validateEmail() {
+      if (email.value && email.checkValidity()) {
+        email.classList.add("is-valid");
+        email.classList.remove("is-invalid");
+        return true;
+      } else {
+        email.classList.add("is-invalid");
+        email.classList.remove("is-valid");
+        return false;
+      }
+    }
+
+    function validatePhone() {
+      let regx = /^[789]\d{9}$/;
+      if (regx.test(phone.value)) {
+        phone.classList.add("is-valid");
+        phone.classList.remove("is-invalid");
+        return true;
+      } else {
+        phone.classList.add("is-invalid");
+        phone.classList.remove("is-valid");
+        return false;
+      }
+    }
+
+    fname.addEventListener("blur", validateFullName);
+    Age.addEventListener("blur", validateAge);
+    Constituency.addEventListener("blur", validateConstituency);
+    voterId.addEventListener("blur", validateVoterId);
+    passwordIp.addEventListener("blur", validatePassword);
+    userType.addEventListener("blur", validateUserType);
+    email.addEventListener("blur", validateEmail);
+    phone.addEventListener("blur", validatePhone);
+
+    function validateForm() {
+      return (
+        validateFullName() &&
+        validateAge() &&
+        validateConstituency() &&
+        validateVoterId() &&
+        validatePassword() &&
+        validateUserType() &&
+        validateEmail() &&
+        validatePhone()
+      );
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (!validateForm()) return;
+
+      let ind = users.findIndex((u) => u.email === email.value.trim());
+      if (ind !== -1) {
+        alert("Same email exists");
+        form.reset();
+        clearValidation();
+        return;
+      }
+
+      let ind1 = users.findIndex((u) => u.phone === Number(phone.value.trim()));
+      if (ind1 !== -1) {
+        alert("Same mobile number exists");
+        form.reset();
+        clearValidation();
+        return;
+      }
+
+      let ind2 = users.findIndex((u) => u.voterId === voterId.value.trim());
+      if (ind2 !== -1) {
+        alert("Same voterId exists");
+        form.reset();
+        clearValidation();
+        return;
+      }
+
+      const user = {
+        name: fname.value.trim(),
+        Age: Age.value.trim(),
+        Constituency: Constituency.value.trim(),
+        email: email.value.trim(),
+        password: passwordIp.value.trim(),
+        phone: Number(phone.value.trim()),
+        voterId: voterId.value.trim(),
+        userType: userType.value.trim(),
+      };
+
+      fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(user),
+      }).then(() => {
+        fetchAndRenderUsers();
+        form.reset();
+        clearValidation();
+        alert("Registration Successful....");
+      });
+    });
+
+    function clearValidation() {
+      fname.classList.remove("is-valid", "is-invalid");
+      Age.classList.remove("is-valid", "is-invalid");
+      Constituency.classList.remove("is-valid", "is-invalid");
+      voterId.classList.remove("is-valid", "is-invalid");
+      passwordIp.classList.remove("is-valid", "is-invalid");
+      userType.classList.remove("is-valid", "is-invalid");
+      email.classList.remove("is-valid", "is-invalid");
+      phone.classList.remove("is-valid", "is-invalid");
+    }
+
+    function fetchAndRenderUsers() {
+      fetch(apiUrl, {
+ method: 'GET', 
+ headers: { 
+ 'Authorization': `Basic ${basicAuth}`,
+ 'Content-Type': 'application/json'
+ } 
+}
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          users = data;
+          renderUsers(data);
+        });
+    }
+
+    function renderUsers(data) {
+      const tbody = document.querySelector("#userTable tbody");
+      tbody.innerHTML = "";
+
+      if (!data.length) {
+        tbody.innerHTML = `<tr><td colspan="8" class="text-center">No users found.</td></tr>`;
+        return;
+      }
+
+      data.forEach((user, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${user.name}</td>
+          <td>${user.Age}</td>
+          <td>${user.Constituency}</td>
+          <td>${user.email}</td>
+          <td>${user.phone}</td>
+          <td>${user.voterId}</td>
+          <td>${user.userType}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    fetchAndRenderUsers();
+  </script>
+</body>
+
+</html>

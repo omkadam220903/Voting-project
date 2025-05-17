@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vote Chart by Election</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+
+  <style>
+    canvas#categoryLineChart {
+      background-color: #ffffff;
+      border-radius: 12px;
+    }
+
+    body {
+      background-color: #f8f9fa;
+    }
+  </style>
+</head>
+<body>
+
+  <h2 class="text-center text-primary my-4">Vote Chart by Election</h2>
+
+  <div class="container mb-4">
+    <div class="row justify-content-center">
+      <div class="col-md-6 text-center">
+        <label for="electionSelect" class="form-label fw-bold">Select Election:</label>
+        <select id="electionSelect" class="form-select" onchange="handleElectionChange()">
+          <option value="">-- Select an Election --</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-10">
+        <div class="card shadow p-4 bg-light">
+          <canvas id="categoryLineChart" height="150"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    let allCandidates = [];
+    let allVotes = [];
+    let elections = [];
+
+    async function fetchElections() {
+      try {
+        const res = await fetch("http://localhost:8080/api/elections");
+        elections = await res.json();
+        console.log("Elections:", elections);
+
+        const select = document.getElementById("electionSelect");
+        select.innerHTML = `<option value="">-- Select an Election --</option>`;
+        elections.forEach(election => {
+          const option = document.createElement("option");
+          option.value = election.title;
+          option.textContent = election.title;
+          select.appendChild(option);
+        });
+      } catch (err) {
+        console.error("Error fetching elections:", err);
+      }
+    }
+
+    window.handleElectionChange = async function handleElectionChange() {
+      const selectedElectionTitle = document.getElementById("electionSelect").value;
+      if (!selectedElectionTitle) return;
+
+      await fetchCandidatesAndVotes();
+
+      const filteredCandidates = allCandidates.filter(c => c.election === selectedElectionTitle);
+      console.log("Filtered Candidates:", filteredCandidates);
+
+      const candidateMap = {};
+      filteredCandidates.forEach(candidate => {
+        candidateMap[candidate.id] = candidate.name;
+      });
+
+      const voteCountMap = {};
+      allVotes.forEach(vote => {
+        if (candidateMap[vote.candidateID]) {
+          const name = candidateMap[vote.candidateID];
+          voteCountMap[name] = (voteCountMap[name] || 0) + 1;
+        }
+      });
+
+      const formattedData = Object.entries(voteCountMap).map(([category, qty]) => ({ category, qty }));
+      console.log("Formatted Data for Chart:", formattedData);
+
+      if (formattedData.length === 0) {
+        alert("No votes found for selected election.");
+      }
+
+      renderVotesLineChart(formattedData);
+    }
+
+    async function fetchCandidatesAndVotes() {
+      if (allCandidates.length && allVotes.length) return;
+
+      try {
+        const [candidatesRes, votesRes] = await Promise.all([
+          fetch("http://localhost:8080/api/candidates"),
+          fetch("http://localhost:8080/api/votes"),
+        ]);
+        allCandidates = await candidatesRes.json();
+        allVotes = await votesRes.json();
+        console.log("All Candidates:", allCandidates);
+        console.log("All Votes:", allVotes);
+      } catch (error) {
+        console.error("Error fetching candidates or votes:", error);
+      }
+    }
+
+    function renderVotesLineChart(itemData) {
+      const labels = itemData.map(item => item.category);
+      const data = itemData.map(item => item.qty);
+
+      const ctx = document.getElementById("categoryLineChart").getContext("2d");
+
+      if (window.lineChartInstance) {
+        window.lineChartInstance.destroy();
+      }
+
+      window.lineChartInstance = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: labels,
+          datasets: [{
+            label: "Votes per Candidate",
+            data: data,
+            backgroundColor: "rgba(54, 162, 235, 0.2)",
+            borderColor: "rgba(54, 235, 235, 0.2)",
+            borderWidth: 1,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            title: {
+              display: true,
+              text: "Votes per Candidate",
+              font: {
+                size: 18,
+              },
+            },
+            legend: {
+              display: false
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Vote Count'
+              }
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Candidates'
+              }
+            }
+          }
+        }
+      });
+    }
+
+    fetchElections();
+  </script>
+</body>
+</html>

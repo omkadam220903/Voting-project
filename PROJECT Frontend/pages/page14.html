@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+          background-color: #f4f6f9;
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0px;
+        }
+    
+        h3 {
+          font-weight: 700;
+          color: #343a40;
+          text-align: center;
+          margin-bottom: 30px;
+        }
+    
+        .container {
+          max-width: 600px;
+          margin: 0 auto;
+        }
+    
+        .card {
+          background-color: #fff;
+          border-radius: 12px;
+          box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.1);
+          padding: 30px;
+        }
+    
+        .form-label {
+          font-weight: 600;
+          color: #343a40;
+          display: block;
+          margin-bottom: 8px;
+        }
+    
+        select.form-select {
+          width: 100%;
+          padding: 10px;
+          border: 1px solid #ced4da;
+          border-radius: 8px;
+          font-size: 14px;
+          margin-bottom: 10px;
+        }
+    
+        .form-select:focus {
+          outline: none;
+          border-color: #0d6efd;
+          box-shadow: 0 0 0 0.1rem rgba(13, 110, 253, 0.25);
+        }
+    
+        .btn-primary {
+          background-color: #0d6efd;
+          border: none;
+          padding: 10px;
+          font-weight: bold;
+          border-radius: 8px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+          color: white;
+        }
+    
+        .btn-primary:hover {
+          background-color: #0b5ed7;
+        }
+    
+        .invalid-feedback {
+          color: red;
+          font-size: 13px;
+          display: none;
+        }
+    
+        .is-invalid ~ .invalid-feedback {
+          display: block;
+        }
+    
+        .is-valid {
+          border-color: green;
+        }
+    
+        .is-invalid {
+          border-color: red;
+        }
+      </style>
+</head>
+<body>
+    
+  
+  <div class="container mt-5">
+    <div class="card shadow-lg">
+      <div class="card-body">
+        <h3 class="card-title text-center mb-4">Cast Your Vote</h3>
+  
+        <form id="voteForm">
+          <div class="mb-3">
+            <label for="election" class="form-label">
+              Select Election
+              <i
+                class="bi bi-question-circle text-muted"
+                data-bs-toggle="tooltip"
+                title="Choose an election to vote in."
+              ></i>
+            </label>
+            <select class="form-select" id="election" required>
+              <option value="">-- Select Election --</option>
+            </select>
+            <div class="invalid-feedback">Please select an election.</div>
+          </div>
+  
+          <div class="mb-3">
+            <label class="form-label">
+              Select Candidate
+              <i
+                class="bi bi-question-circle text-muted"
+                data-bs-toggle="tooltip"
+                title="Vote for only one candidate."
+              ></i>
+            </label>
+            <select class="form-select" id="candidate" required>
+              <option value="">-- Select Candidate --</option>
+            </select>
+            <div class="invalid-feedback">Please select a candidate.</div>
+          </div>
+  
+          <div class="d-grid">
+            <button type="submit" class="btn btn-primary" style="background-color: green;">Submit Vote</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    voteForm = document.getElementById("voteForm");
+    electionSelect = document.getElementById("election");
+    candidateSelect = document.getElementById("candidate");
+  
+    elections = [];
+    candidates = [];
+  
+    // Load elections on page load
+    function loadElections() {
+      fetch("http://localhost:8080/api/elections")
+        .then((res) => res.json())
+        .then((data) => {
+          elections = data;
+          electionSelect.innerHTML = `<option value="">-- Select Election --</option>`;
+          data.forEach((e) => {
+            electionSelect.innerHTML += `<option value="${e.id}">${e.title}</option>`;
+          });
+        });
+    }
+
+    async function getElectionTitlefromId(electionID) {
+      try {
+        const res = await fetch("http://localhost:8080/api/elections");
+        const data = await res.json();
+        const election = data.find(e => e.id == electionID);
+        return election ? election.title : null;
+      } catch (err) {
+        console.error("Error fetching elections:", err);
+        return null;
+      }
+    }
+  
+    // Load all candidates and filter based on selected election
+    async function loadCandidatesForElection(electionID) {
+      
+      const electionTitle = await getElectionTitlefromId(electionID);
+      console.log(electionTitle);
+      
+      
+      fetch("http://localhost:8080/api/candidates")
+        .then((res) => res.json())
+        .then((data) => {
+          candidates = data;
+          const filtered = data.filter((c) => c.election === electionTitle);
+          candidateSelect.innerHTML = `<option value="">-- Select Candidate --</option>`;
+          filtered.forEach((c) => {
+            candidateSelect.innerHTML += `<option value="${c.id}">${c.name} (${c.party})</option>`;
+          });
+        });
+    }
+  
+    function validateField(field) {
+      if (field.value) {
+        field.classList.add("is-valid");
+        field.classList.remove("is-invalid");
+        return true;
+      } else {
+        field.classList.add("is-invalid");
+        field.classList.remove("is-valid");
+        return false;
+      }
+    }
+  
+    function clearValidation() {
+      [electionSelect, candidateSelect].forEach((f) => {
+        f.classList.remove("is-valid", "is-invalid");
+      });
+    }
+  
+    electionSelect.addEventListener("change", () => {
+      validateField(electionSelect);
+      loadCandidatesForElection(electionSelect.value);
+    });
+  
+    candidateSelect.addEventListener("change", () =>
+      validateField(candidateSelect)
+    );
+  
+voteForm.addEventListener("submit", function (e) {
+  e.preventDefault();
+  const validElection = validateField(electionSelect);
+  const validCandidate = validateField(candidateSelect);
+
+  if (!validElection || !validCandidate) return;
+
+  const userID = sessionStorage.getItem("userId");
+  const electionID = electionSelect.value;
+
+  // First fetch all votes and filter manually
+  fetch("http://localhost:8080/api/votes")
+    .then(res => res.json())
+    .then(allVotes => {
+      const alreadyVoted = allVotes.some(
+        vote => vote.userID == userID && vote.electionID == electionID
+      );
+
+      if (alreadyVoted) {
+        alert("⚠️ You have already voted in this election.");
+        return;
+      }
+
+      const confirmVote = confirm("Are you sure you want to cast your vote?");
+      if (!confirmVote) return;
+
+      const voteData = {
+        userID: userID,
+        candidateID: candidateSelect.value,
+        electionID: electionID,
+        voteDate: new Date().toISOString().split("T")[0],
+      };
+
+      fetch("http://localhost:8080/api/votes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(voteData),
+      })
+        .then(() => {
+          alert("✅ Vote submitted successfully!");
+          voteForm.reset();
+          clearValidation();
+          candidateSelect.innerHTML = `<option value="">-- Select Candidate --</option>`;
+        })
+        .catch((err) => {
+          alert("❌ Error submitting vote.");
+          console.error(err);
+        });
+    })
+    .catch((err) => {
+      alert("❌ Error checking previous votes.");
+      console.error(err);
+    });
+});
+
+
+  
+    loadElections();
+  </script>
+</body>
+</html>

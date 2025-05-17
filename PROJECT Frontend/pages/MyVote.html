@@ -1,0 +1,67 @@
+<h2 class="text-center text-primary mb-4">
+  <i class="fas fa-check-circle me-2"></i>My Votes
+</h2>
+
+<div id="voteContainer" class="row justify-content-center"></div>
+
+<script>
+  const voteContainer = document.getElementById("voteContainer");
+  const userId = sessionStorage.getItem("userId");
+
+  let elections = [], candidates = [], votes = [];
+
+  async function fetchData() {
+    try {
+      const [electionsRes, candidatesRes, votesRes] = await Promise.all([
+        fetch("http://localhost:8080/api/elections"),
+        fetch("http://localhost:8080/api/candidates"),
+        fetch("http://localhost:8080/api/votes")
+      ]);
+
+      elections = await electionsRes.json();
+      candidates = await candidatesRes.json();
+      votes = await votesRes.json();
+
+      displayUserVotes();
+    } catch (error) {
+      console.error("Error loading data:", error);
+    }
+  }
+
+  function displayUserVotes() {
+    const userVotes = votes.filter(vote => vote.userID == userId);
+
+    if (userVotes.length === 0) {
+      voteContainer.innerHTML = `
+        <div class="col-12 text-center text-muted">
+          You haven't voted in any elections yet.
+        </div>`;
+      return;
+    }
+
+    userVotes.forEach(vote => {
+      const election = elections.find(e => e.id == vote.electionID);
+      const candidate = candidates.find(c => c.id == vote.candidateID);
+
+      if (election && candidate) {
+        voteContainer.innerHTML += `
+          <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title text-primary">
+                  <i class="fas fa-vote-yea me-2 text-success"></i>${election.title}
+                </h5>
+                <p class="card-text"><strong>Candidate:</strong> ${candidate.name}</p>
+                <p class="card-text"><strong>Party:</strong> ${candidate.party}</p>
+                <p class="card-text"><strong>Position:</strong> ${candidate.position}</p>
+                <p class="card-text text-muted"><strong>Vote Date:</strong> ${vote.voteDate}</p>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+    });
+  }
+
+  fetchData();
+</script>

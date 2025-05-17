@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Reset Password / Re-verify Voter</title>
+  <style>
+    body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+}
+  
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #2c3e50;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      font-weight: 600;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .btn {
+      margin-top: 20px;
+      padding: 10px 15px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .btn:hover {
+      background-color: #2980b9;
+    }
+
+    .section-divider {
+      margin: 40px 0 20px;
+      border-top: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Reset Voter Password</h2>
+    <form>
+      <label for="voterId">Voter ID:</label>
+      <input type="text" id="voterId" placeholder="Enter Voter ID" required>
+
+      <label for="email">Registered Email:</label>
+      <input type="email" id="email" placeholder="Enter voter email" required>
+
+      <label for="newPassword">New Password:</label>
+      <input type="password" id="newPassword" placeholder="Enter new password" required>
+
+      <button type="submit" class="btn">Reset Password</button>
+    </form>
+
+    <div class="section-divider"></div>
+
+    <h2>Re-Verify Voter</h2>
+    <form>
+      <label for="verifyVoterId">Voter ID:</label>
+      <input type="text" id="verifyVoterId" placeholder="Enter Voter ID to verify" required>
+
+      <label for="aadhar">Aadhar Number (last 4 digits):</label>
+      <input type="text" id="aadhar" placeholder="Enter last 4 digits" required>
+
+      <button type="submit" class="btn">Re-Verify</button>
+    </form>
+  </div>
+
+</body>
+</html>

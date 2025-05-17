@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Candidate Management</title>
+  <style>
+    body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+}
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .form-section, .table-section {
+      background-color: #fff;
+      padding: 15px;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 800px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #aaa;
+      border-radius: 4px;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: #007bff;
+      border: none;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+
+    .actions button {
+      margin-right: 5px;
+      padding: 5px 10px;
+      font-size: 14px;
+    }
+
+    .edit-btn {
+      background-color: orange;
+    }
+
+    .delete-btn {
+      background-color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Candidate Management</h1>
+
+  <div class="form-section">
+    <h3>Add New Candidate</h3>
+    <form>
+      <label for="name">Candidate Name:</label>
+      <input type="text" id="name" placeholder="Enter name">
+
+      <label for="party">Party Name:</label>
+      <input type="text" id="party" placeholder="Enter party name">
+
+      <label for="position">Position:</label>
+      <select id="position">
+        <option>Select Position</option>
+        <option>President</option>
+        <option>Vice President</option>
+        <option>Secretary</option>
+      </select>
+
+      <label for="bio">Candidate Bio:</label>
+      <textarea id="bio" rows="4" placeholder="Short description..."></textarea>
+
+      <button type="submit">Add Candidate</button>
+    </form>
+  </div>
+
+  <div class="table-section">
+    <h3>Candidate List</h3>
+    <table>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Party</th>
+        <th>Position</th>
+        <th>Actions</th>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>Ali Khan</td>
+        <td>Hope Party</td>
+        <td>President</td>
+        <td class="actions">
+          <button class="edit-btn">Edit</button>
+          <button class="delete-btn">Delete</button>
+        </td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Sara Ahmed</td>
+        <td>Unity Group</td>
+        <td>Secretary</td>
+        <td class="actions">
+          <button class="edit-btn">Edit</button>
+          <button class="delete-btn">Delete</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+</body>
+</html>

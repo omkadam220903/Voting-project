@@ -1,0 +1,116 @@
+<div class="container py-5">
+    <div class="card shadow rounded-4 mx-auto" style="max-width: 650px;">
+      <div class="card-header bg-primary text-white rounded-top-4">
+        <h4 class="mb-0 fw-semibold">Manage Voting Status</h4>
+      </div>
+      <div class="card-body">
+
+        <div class="mb-3">
+          <label for="electionSelect" class="form-label fw-semibold">Select Election</label>
+          <select id="electionSelect" class="form-select" onchange="handleElectionSelect()">
+            <option value="">-- Select --</option>
+          </select>
+        </div>
+
+        <div id="statusSection" class="border rounded-3 bg-body-secondary p-3 mt-4 d-none">
+          <p id="selectedElectionTitle" class="fw-semibold text-secondary"></p>
+
+          <div class="d-flex align-items-center mb-3">
+            <div class="form-check me-4">
+              <input class="form-check-input" type="radio" name="status" id="enable" value="Active">
+              <label class="form-check-label" for="enable">Enable</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="status" id="disable" value="Inactive">
+              <label class="form-check-label" for="disable">Disable</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-4">
+          <button class="btn btn-success px-4 py-2 fw-semibold" onclick="saveStatus()">Save Changes</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      const API_URL = "http://localhost:8080/api/elections";
+      abc();
+      function abc() {
+        fetch(API_URL)
+          .then(res => res.json())
+          .then(data => {
+            elections = data;
+            populateDropdown();
+          })
+          .catch(err => {
+            console.error("Fetch error:", err);
+            alert("Failed to load elections.");
+          });
+      }
+
+      let elections = [];
+      let selectedElection = null;
+
+      function populateDropdown() {
+        const select = document.getElementById("electionSelect");
+        elections.forEach(e => {
+          const option = document.createElement("option");
+          option.value = e.id;
+          option.textContent = e.title;
+          select.appendChild(option);
+        });
+      }
+
+      window.handleElectionSelect = function () {
+        const selectedId = document.getElementById("electionSelect").value;
+        const section = document.getElementById("statusSection");
+
+        if (!selectedId) {
+          section.classList.add("d-none");
+          return;
+        }
+
+        selectedElection = elections.find(e => e.id == selectedId);
+        document.getElementById("selectedElectionTitle").textContent = `Election: ${selectedElection.title}`;
+
+        document.getElementById("enable").checked = selectedElection.status === "Active";
+        document.getElementById("disable").checked = selectedElection.status === "Inactive";
+
+        section.classList.remove("d-none");
+      }
+
+      window.saveStatus = function () {
+        if (!selectedElection) return;
+
+        const newStatus = document.querySelector('input[name="status"]:checked')?.value;
+        if (!newStatus || newStatus === selectedElection.status) {
+          alert("No changes to save.");
+          return;
+        }
+
+        fetch(`${API_URL}/${selectedElection.id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ status: newStatus })
+        })
+          .then(res => {
+            if (res.ok) {
+              alert("Election status updated!");
+              selectedElection.status = newStatus;
+            } else {
+              throw new Error("Failed to update status.");
+            }
+          })
+          .catch(err => {
+            console.error("Update error:", err);
+            alert("Error updating status.");
+          });
+      }
+    })();
+  </script>

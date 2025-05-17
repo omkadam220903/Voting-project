@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Approve/Reject Voter Registrations</title>
+  <style>
+    body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+}
+    
+
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+
+    .table-container {
+      max-width: 900px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 12px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    th {
+      background-color: #3498db;
+      color: white;
+    }
+
+    .btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 4px;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .btn-approve {
+      background-color: #28a745;
+    }
+
+    .btn-reject {
+      background-color: #dc3545;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Pending Voter Registrations</h1>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Voter ID</th>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Constituency</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>V101</td>
+          <td>Neha Verma</td>
+          <td>29</td>
+          <td>West Zone</td>
+          <td>
+            <button class="btn btn-approve">Approve</button>
+            <button class="btn btn-reject">Reject</button>
+          </td>
+        </tr>
+        <tr>
+          <td>V102</td>
+          <td>Raj Malhotra</td>
+          <td>34</td>
+          <td>East Zone</td>
+          <td>
+            <button class="btn btn-approve">Approve</button>
+            <button class="btn btn-reject">Reject</button>
+          </td>
+        </tr>
+        <tr>
+          <td>V103</td>
+          <td>Sana Khan</td>
+          <td>41</td>
+          <td>Central Zone</td>
+          <td>
+            <button class="btn btn-approve">Approve</button>
+            <button class="btn btn-reject">Reject</button>
+          </td>
+        </tr>
+        <!-- Add more pending voters here -->
+      </tbody>
+    </table>
+  </div>
+
+</body>
+</html>

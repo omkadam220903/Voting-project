@@ -1,0 +1,393 @@
+{
+  "elections": [
+    {
+      "title": "Student Council President 2024",
+      "startDate": "2024-03-20",
+      "endDate": "2024-03-22",
+      "id": "E001",
+      "status": "active"
+    },
+    {
+      "title": "Class Representative 2024",
+      "startDate": "2025-04-18",
+      "endDate": "2025-04-22",
+      "id": "E002",
+      "status": "active"
+    },
+    {
+      "id": "E003",
+      "title": "Sports Committee Head 2024",
+      "startDate": "2024-03-01",
+      "endDate": "2024-03-15",
+      "status": "inactive"
+    },
+    {
+      "id": "ed8c",
+      "title": "State Transport minister",
+      "startDate": "2025-04-19",
+      "endDate": "2025-04-21",
+      "status": "active"
+    },
+    {
+      "id": "837f",
+      "title": "Local Body Elections 2025",
+      "startDate": "2025-04-22",
+      "endDate": "2025-04-23",
+      "status": "Inactive"
+    }
+  ],
+  "candidates": [
+    {
+      "name": "Priyanka Patel",
+      "election": "Student Council President 2024",
+      "party": "Progressive Students",
+      "position": "President",
+      "manifesto": "Academic excellence and extracurricular activities",
+      "id": "C002"
+    },
+    {
+      "name": "Amit Kumar",
+      "election": "Sports Committee Head 2024",
+      "party": "Youth Vision",
+      "position": "Class Representative",
+      "manifesto": "Better communication between students and faculty",
+      "id": "C003"
+    },
+    {
+      "name": "Neha Gupta",
+      "election": "State Transport minister",
+      "party": "Student Unity Party",
+      "position": "Class Representative",
+      "manifesto": "Enhanced learning environment",
+      "id": "C004"
+    },
+    {
+      "name": "Vikram Singh",
+      "election": "Class Representative 2024",
+      "party": "Sports Enthusiasts",
+      "position": "Sports Head",
+      "manifesto": "More sports facilities and tournaments",
+      "id": "C005"
+    },
+    {
+      "name": "Sneha Reddy",
+      "election": "State Transport minister",
+      "party": "Progressive Peoples",
+      "position": "Sports Head",
+      "manifesto": "Inclusive sports programs",
+      "id": "C006"
+    },
+    {
+      "name": "Arnav Deshmukh",
+      "election": "Student Council President 2024",
+      "party": "gihgbj",
+      "position": "lkjhgcf",
+      "manifesto": "free water for everyone",
+      "id": "5627"
+    },
+    {
+      "id": "f091",
+      "name": "SAHIL SHELKE",
+      "election": "Sports Committee Head 2024",
+      "party": "MIM",
+      "position": "KJHGF",
+      "manifesto": "KJH"
+    },
+    {
+      "id": "ccdb",
+      "name": "Virat patel",
+      "election": "Class Representative 2024",
+      "party": "Helping Hand",
+      "position": "xx",
+      "manifesto": "qwertyuiop"
+    }
+  ],
+  "votes": [
+    {
+      "id": "f29b",
+      "userID": "U006",
+      "candidateID": "C002",
+      "voteDate": "2025-04-21"
+    },
+    {
+      "id": "ce4e",
+      "userID": "U002",
+      "candidateID": "C002",
+      "voteDate": "2025-04-21"
+    },
+    {
+      "id": "3e6c",
+      "userID": "U004",
+      "candidateID": "C006",
+      "voteDate": "2025-04-21"
+    },
+    {
+      "id": "d8ae",
+      "userID": "U002",
+      "candidateID": "C003",
+      "voteDate": "2025-04-22"
+    },
+    {
+      "id": "4334",
+      "userID": "U002",
+      "candidateID": "C004",
+      "voteDate": "2025-04-24"
+    },
+    {
+      "id": "7522",
+      "userID": "U008",
+      "candidateID": "C004",
+      "voteDate": "2025-04-27"
+    },
+    {
+      "id": "ec59",
+      "userID": "U008",
+      "candidateID": "C006",
+      "voteDate": "2025-04-27"
+    },
+    {
+      "id": "88c8",
+      "userID": "U008",
+      "candidateID": "C003",
+      "voteDate": "2025-04-27"
+    },
+    {
+      "id": "b64c",
+      "userID": "U008",
+      "candidateID": "C003",
+      "voteDate": "2025-04-27"
+    },
+    {
+      "id": "0ec9",
+      "userID": "U002",
+      "candidateID": "5627",
+      "voteDate": "2025-04-28"
+    },
+    {
+      "id": "676f",
+      "userID": "U004",
+      "candidateID": "C002",
+      "voteDate": "2025-04-29"
+    },
+    {
+      "id": "f548",
+      "userID": "U002",
+      "candidateID": "5627",
+      "voteDate": "2025-04-29"
+    },
+    {
+      "id": "8c60",
+      "userID": "U002",
+      "candidateID": "5627",
+      "voteDate": "2025-04-29"
+    },
+    {
+      "id": "7836",
+      "userID": "U002",
+      "candidateID": "ccdb",
+      "voteDate": "2025-04-29"
+    },
+    {
+      "id": "88cd",
+      "userID": "c618",
+      "candidateID": "C003",
+      "voteDate": "2025-04-29"
+    },
+    {
+      "id": "4893",
+      "userID": "14",
+      "candidateID": "C002",
+      "voteDate": "2025-05-01"
+    },
+    {
+      "id": "88c9",
+      "userID": "25",
+      "candidateID": "f091",
+      "voteDate": "2025-05-01"
+    },
+    {
+      "id": "f126",
+      "userID": "24",
+      "candidateID": "ccdb",
+      "voteDate": "2025-05-01"
+    }
+  ],
+  "users": [
+    {
+      "name": "Kavya Patel",
+      "Age": "32",
+      "Constituency": "Uttar pradesh",
+      "email": "kavya.patel@example.com",
+      "phone": "8321098765",
+      "password": "KavyaPwd987",
+      "voterId": "VOTER1006",
+      "userType": "Admin",
+      "id": "U001"
+    },
+    {
+      "name": "Arjun Reddy",
+      "Age": "25",
+      "Constituency": "Tamilnadu",
+      "email": "arjun.reddy@gmail.com",
+      "phone": "7210987654",
+      "password": "ArjunPass159",
+      "voterId": "VOTER1007",
+      "userType": "Voter",
+      "id": "U002"
+    },
+    {
+      "name": "Rahul Nair",
+      "Age": "22",
+      "Constituency": "Telangana",
+      "email": "rahul.nair@example.com",
+      "phone": "9098765432",
+      "password": "RahulPwd852",
+      "voterId": "VOTER1009",
+      "userType": "Admin",
+      "id": "U003"
+    },
+    {
+      "name": "Sneha Joshi",
+      "Age": "40",
+      "Constituency": "Maharashtra",
+      "email": "sneha.joshi@example.com",
+      "phone": "9988776655",
+      "password": "SnehaPass456",
+      "voterId": "VOTER1010",
+      "userType": "Voter",
+      "id": "U004"
+    },
+    {
+      "name": "Meera Rao",
+      "Age": "49",
+      "Constituency": "Maharashtra",
+      "email": "meera.rao@example.com",
+      "phone": "7766554433",
+      "password": "MeeraPwd123",
+      "voterId": "VOTER1012",
+      "userType": "Admin",
+      "id": "U005"
+    },
+    {
+      "name": "Siddharth Iyer",
+      "Age": "26",
+      "Constituency": "Kerala",
+      "email": "siddharth.iyer@example.com",
+      "phone": "8655443322",
+      "password": "SiddharthPass321",
+      "voterId": "VOTER1013",
+      "userType": "Voter",
+      "id": "U006"
+    },
+    {
+      "name": "Pooja Chatterjee",
+      "Age": "28",
+      "Constituency": "Bihar",
+      "email": "pooja.chatterjee@example.com",
+      "phone": "9544332211",
+      "password": "PoojaSecure654",
+      "voterId": "VOTER1014",
+      "userType": "Voter",
+      "id": "U007"
+    },
+    {
+      "name": "Karan Malhotra",
+      "Age": "25",
+      "Constituency": "Punjab",
+      "email": "karan.malhotra@example.com",
+      "phone": "9433221100",
+      "password": "KaranPwd987",
+      "voterId": "VOTER1015",
+      "userType": "Voter",
+      "id": "U008"
+    },
+    {
+      "name": "Om kadam",
+      "Age": "20",
+      "Constituency": "Maharashtra",
+      "email": "omkadam87626@gmail.com",
+      "password": "@RMDswami22",
+      "phone": "9067600729",
+      "voterId": "Voter22",
+      "userType": "Admin",
+      "id": "U009"
+    },
+    {
+      "name": "parth sutar",
+      "Age": "25",
+      "Constituency": "Karnataka",
+      "email": "pxaarth234@gmail.com",
+      "password": "Pxart123",
+      "phone": "9876452342",
+      "voterId": "aQ1223",
+      "userType": "Voter",
+      "id": "U010"
+    },
+    {
+      "id": "372a",
+      "name": "pratik yadav",
+      "Age": "29",
+      "Constituency": "Maharashtra",
+      "email": "pratik123@gmail.com",
+      "password": "Psk2sjd2",
+      "phone": "7896504377",
+      "voterId": "Mh1234",
+      "userType": "Admin"
+    },
+    {
+      "id": "c618",
+      "name": "Rahul patil",
+      "Age": "22",
+      "Constituency": "Maharashtra",
+      "email": "rahul9876@gmail.com",
+      "password": "okU87652",
+      "phone": "8456789324",
+      "voterId": "jk1234",
+      "userType": "Voter"
+    },
+    {
+      "id": "9c56",
+      "name": "Ria chakravarty",
+      "Age": "21",
+      "Constituency": "Jk",
+      "email": "ria34ty56@gmail.com",
+      "password": "Jkpok123",
+      "phone": "9879965432",
+      "voterId": "jk5678",
+      "userType": "Voter"
+    },
+    {
+      "id": "6d15",
+      "name": "Ram Thakare",
+      "Age": "22",
+      "Constituency": "maharashtra",
+      "email": "omkadam87626@gmail.com",
+      "password": "Jh876543",
+      "phone": "8765434234",
+      "voterId": "jk1238",
+      "userType": "Voter"
+    },
+    {
+      "id": "3f02",
+      "name": "Imran jakatdar",
+      "Age": "22",
+      "Constituency": "J&k",
+      "email": "imranj@gmail.com",
+      "password": "Jk123456",
+      "phone": "9067892272",
+      "voterId": "Kj1298",
+      "userType": "Admin"
+    },
+    {
+      "id": "c2c0",
+      "name": "Narendra bhide",
+      "Age": "56",
+      "Constituency": "Gujrat",
+      "email": "Naruuu@gmail.com",
+      "password": "AbNaru23",
+      "phone": "7210987654",
+      "voterId": "220903",
+      "userType": "Admin"
+    }
+  ]
+}
